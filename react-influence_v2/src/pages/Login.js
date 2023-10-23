@@ -25,7 +25,7 @@ function Login() {
     e.preventDefault();
 
     // 이 로직은 일반 로그인 로직이고 LoginHandeler.js 에서 카카오 로그인 jwt 처리합니다.
-    const serverURL = '/api/user/jwtlogin';
+    const serverURL = '/user/jwtlogin';
 
     axios.post(serverURL, formData)
       .then((response) => {

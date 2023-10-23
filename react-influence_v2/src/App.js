@@ -28,7 +28,7 @@ function App() {
   const [message, setMessage] = useState([]);
   
   const Proxytest = () => {
-    axios.get('/api/hello')
+    axios.get('/hello')
       .then((res) => {
         setMessage(res.data);
         alert(res.data);

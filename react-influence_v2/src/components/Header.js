@@ -24,7 +24,7 @@ function Header() {
       'Authorization': `Bearer ${jwtToken}`,
     };
   
-    const paymentEndpoint = '/api/payment/ready';
+    const paymentEndpoint = '/payment/ready';
 
     axios.get(paymentEndpoint, { headers })
       .then(response => {
@@ -62,7 +62,7 @@ function Header() {
       };
 
       // 사용자 프로필 정보를 가져오는 API 호출
-      axios.post('/api/user/profile', {}, { headers })
+      axios.post('/user/profile', {}, { headers })
         .then(response => {
           // setUserProfile(response.data); // 프로필 정보를 상태 변수에 저장
           // console(userProfile.username);

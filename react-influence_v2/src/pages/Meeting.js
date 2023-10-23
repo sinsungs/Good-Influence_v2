@@ -32,7 +32,7 @@ function Meeting() {
 
     useEffect(() => {
         // 서버에서 데이터 가져오기
-        axios.get('/api/meet/list')
+        axios.get('/meet/list')
         .then(response => {
             setMeets(response.data);
         })
@@ -77,7 +77,7 @@ function Meeting() {
       }
   
       // 예시: 데이터를 서버로 전송하는 코드
-      axios.post('/api/meet/create', meetData, {
+      axios.post('/meet/create', meetData, {
         headers: {
           Authorization: `Bearer ${jwtToken}`, // JWT 토큰을 헤더에 추가
         },
@@ -107,7 +107,7 @@ function Meeting() {
       
       alert('소셜 모임을 신청하시겠습니까 ?')
     
-      axios.post(`/api/meeting/register/${meetid}`,
+      axios.post(`/meeting/register/${meetid}`,
         {
           price : 10000
         }, {
@@ -144,7 +144,7 @@ function Meeting() {
       
       alert('소셜 모임을 취소 하시겠습니까 ?')
     
-      axios.delete(`/api/meeting/delete/${meetid}`,
+      axios.delete(`/meeting/delete/${meetid}`,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`, // JWT 토큰을 헤더에 추가
@@ -178,7 +178,7 @@ function Meeting() {
       
       alert('소셜 모임을 삭제 하시겠습니까 ?')
     
-      axios.delete(`/api/meet/delete/${meetid}`,
+      axios.delete(`/meet/delete/${meetid}`,
       {
         headers: {
           Authorization: `Bearer ${jwtToken}`, // JWT 토큰을 헤더에 추가
