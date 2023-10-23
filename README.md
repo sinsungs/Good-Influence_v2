@@ -6,6 +6,6 @@
 - 2023/10/24 ~ 10/30 - v2 버전 (개발중)
 
 ## 📄 작업 내역
-(https://sinsung.notion.site/V2-dab9650f785e408dba9cac0fec651de5?pvs=4)
+https://sinsung.notion.site/V2-dab9650f785e408dba9cac0fec651de5?pvs=4
 
 
