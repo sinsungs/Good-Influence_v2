@@ -2,6 +2,7 @@ package com.influence.domain.meet.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,23 +27,18 @@ import lombok.RequiredArgsConstructor;
 public class MeetController {
 
     private final MeetService meetService;
-    private final S3UploadService s3UploadService;
+//    private final S3UploadService s3UploadService;
 	
     @PostMapping("/create")
-    public ResponseEntity<Meet> createMeet(@RequestBody MeetDTO dto, Authentication authentication) {
+    public ResponseEntity<Boolean> createMeet(@RequestBody MeetDTO dto, Authentication authentication) {
     	
-    	System.out.println("정보" + authentication.getName());
-    	System.out.println("수용인원" + dto.getMaxplayers());
-    	System.out.println("만남시간" + dto.getMeettime());
-    	
-//        String storedFileName = s3UploadService.saveFile(image,"images");
-//        diary.setImageUrl(storedFileName);
-    	
-    	dto.setWriter(authentication.getName());
-    	
-        Meet createdMeet = meetService.createMeet(dto);
+        boolean result = meetService.createMeet(dto, authentication);
         
-        return ResponseEntity.ok(createdMeet);
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
     }
     
     
@@ -51,35 +47,37 @@ public class MeetController {
     	
         List<MeetDTO> listMeet = meetService.listMeet();
         
-        return ResponseEntity.ok(listMeet);
+		if(!listMeet.isEmpty()) {
+			return ResponseEntity.ok(listMeet);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
     }
     
     
     @PutMapping("/update/{meetId}")
-    public ResponseEntity<String> updateMeet(@PathVariable Long meetId, @RequestBody MeetDTO dto) {
+    public ResponseEntity<Boolean> updateMeet(@PathVariable Long meetId, @RequestBody MeetDTO dto) {
     	
-        String updatedMeet = meetService.updateMeet(meetId, dto);
+    	boolean result = meetService.updateMeet(meetId, dto);
         
-        if (updatedMeet == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        return ResponseEntity.ok(updatedMeet);
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
     }
     
 
     @DeleteMapping("/delete/{meetId}")
-    public ResponseEntity<String> deleteMeet(@PathVariable Long meetId, Authentication authentication) {
+    public ResponseEntity<Boolean> deleteMeet(@PathVariable Long meetId, Authentication authentication) {
     	
-        boolean deleted = meetService.deleteMeet(meetId);
+        boolean result = meetService.deleteMeet(meetId);
         
-        String result = "삭제했습니다.";
-        
-        if (deleted) {
-            return ResponseEntity.ok(result);
-        }
-        
-        return ResponseEntity.notFound().build();
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
     }
     
     
