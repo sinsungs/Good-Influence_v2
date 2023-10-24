@@ -1,4 +1,4 @@
-package com.influence.global;
+package com.influence.domain;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ import lombok.Getter;
 @MappedSuperclass  // 테이블로 생성하지 않는다 
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
-abstract class BaseEntity {
+public abstract class BaseEntity {
 
 	@CreatedDate
 	@Column(name="regdate", updatable=false)

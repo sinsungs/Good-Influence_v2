@@ -1,15 +1,26 @@
 package com.influence.domain.user.service;
 
-
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.influence.domain.kakao.KakaoProfile;
+import com.influence.domain.oauth.OAuthToken;
 import com.influence.domain.user.RoleType;
 import com.influence.domain.user.dto.UserDTO;
 import com.influence.domain.user.entity.User;
+import com.influence.domain.user.mapper.UserMapper;
 import com.influence.domain.user.repository.UserRepository;
 import com.influence.global.AppException;
 import com.influence.global.ErrorCode;
@@ -18,6 +29,7 @@ import com.influence.global.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -25,6 +37,7 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder encoder;
+	private final UserMapper userMapper;
 	
 	
 	// jwt 로그인 
@@ -100,90 +113,150 @@ public class UserService {
 		    return "닉네임은 최소 2글자 이상이어야 합니다.";
 		}
 		
-		
-		
 		// email 중복 check 
 		User userID = userRepository.findByEmail(dto.getEmail()).orElse(null);
 		
 		if(userID != null) {
 			return "이미 사용중인 아이디입니다.";
 		}
-			
-//				.ifPresent((user) -> {
-//					
-//					throw new AppException(ErrorCode.USERNAME_NOTFOUND, "이미 사용중인 아이디입니다.");
-//				
-//				});
 					
-		
 		// username 중복 check
 				User userName = userRepository.findByUsername(dto.getUsername()).orElse(null);
 				
 				if(userName != null) {
 					return "닉네임 '" + userName.getUsername() + "' 사용중입니다.";
 				}
-				
-//				.ifPresent((user) -> {
-//					
-//					throw new AppException(ErrorCode.USERNAME_DUPLICATED , user.getUsername() + "는 이미 있습니다.");
-//		
-//				});
 		
-		// 저장
-		User user = User.builder()
-				.username(dto.getUsername())
-				.password(encoder.encode(dto.getPassword()))
-				.email(dto.getEmail())
-				.role(RoleType.USER)
-				.oauth("local")
-				.amount(100000)
-				.experience(0)
-				.sns("유저")
-				.imageUrl("https://sinsung-s3.s3.ap-northeast-2.amazonaws.com/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84.jpeg")
-				.build();
+		// Mapper
+		User user = userMapper.ToEntity(dto);
 		
+		// Repository
         userRepository.save(user);
         
-        return "회원가입에 성공하셨습니다.";
+        String result = "회원가입에 성공하셨습니다.";
+        
+        return result;
         
 	}
 
 	
 	// 카카오 로그인
 	@Transactional
-	public User KakaoTest(KakaoProfile kakao) {
+	public User KakaoTest(KakaoProfile dto) {
 		
-		User user = User.builder()
-				.username(kakao.getKakao_account().getEmail()+"_"+ kakao.getId())
-				.email(kakao.getKakao_account().getEmail())
-				.password(encoder.encode("examplePassword"))
-				.role(RoleType.USER)
-				.oauth("kakao")
-				.amount(100000)
-				.experience(0)
-				.sns("default")
-				.imageUrl("https://sinsung-s3.s3.ap-northeast-2.amazonaws.com/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84.jpeg")
-				.build();
+		// Mapper
+		User user = userMapper.ToEntity(dto);
 		
+		// Repository
 		return userRepository.save(user);
 		
 	}
 	
-	
-	// 이미 가입한 유저인지 체크하고 처리하는 로직 추가 해야함 
+	// 유저 찾기 
 	@Transactional
-	public User 회원찾기(String email) {
+	public User findUser(String email) {
 		
 		User user = userRepository.findByEmail(email).orElseGet(()->{
 			return new User();
 		});
 		
 		return user;
-		
 	}
 
 	
-
+	public OAuthToken getKakaoToken(String code) {
+		
+		log.info(code);
+		
+		// 토큰을 받아오기위해 POST 요청 
+		// POST 방식으로 key=value 데이터 요청 
+		RestTemplate rt = new RestTemplate();
+		
+		// HttpHeader 오브젝트 생성
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		// HttpBody 오브젝트 생성
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", "b58919f7c93ec635d5c0b3697d4aac6b");
+		params.add("redirect_uri", "https://goodinfluence.shop/login/oauth2/callback/kakao");
+		params.add("code", code);
+		
+		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = 
+				new HttpEntity<>(params,headers);
+		
+		// Http 요청하기 - post방식으로 - 그리고 response 응답받기
+		ResponseEntity<String> response = rt.exchange(
+			"https://kauth.kakao.com/oauth/token",
+			HttpMethod.POST,
+			kakaoTokenRequest,
+			String.class
+		);
+		
+		// 카카오 Response 값 매핑 ( json ) 
+		ObjectMapper objectMapper = new ObjectMapper();
+		OAuthToken oauthToken = null;
+		
+		try {
+			oauthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return oauthToken;
+	}
+	
+	
+	
+	public KakaoProfile getKakaoProfile(OAuthToken oauthToken) {
+		// 토큰을 이용한 POST 요청 사용자 정보 조회 
+		// POST 방식으로 key=value 데이터 요청 
+		RestTemplate rt2 = new RestTemplate();
+		
+		// HttpHeader 오브젝트 생성
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", "Bearer "+oauthToken.getAccess_token());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기
+		HttpEntity<MultiValueMap<String,String>> kakaoProfileRequest2 = 
+				new HttpEntity<>(headers2);
+		
+		// Http 요청하기 - post방식으로 - 그리고 response 응답받기
+		ResponseEntity<String> response2 = rt2.exchange(
+			"https://kapi.kakao.com/v2/user/me",
+			HttpMethod.POST,
+			kakaoProfileRequest2,
+			String.class
+		);
+		
+		ObjectMapper objectMapper2 = new ObjectMapper();
+		KakaoProfile kakaoProfile = null;
+		
+		try {
+			kakaoProfile = objectMapper2.readValue(response2.getBody(), KakaoProfile.class);
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		System.out.println(kakaoProfile);
+//		System.out.println("카카오 이메일 : " + kakaoProfile.getKakao_account().getEmail());
+        log.info("카카오 이메일 : " + kakaoProfile.getKakao_account().getEmail());
+        log.info("카카오 유저네임 : " + kakaoProfile.getKakao_account().getEmail()+"_"+ kakaoProfile.getId());
+		
+        return kakaoProfile;
+	}
+	
 
 
 

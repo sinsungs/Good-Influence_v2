@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.influence.Service.PostService;
 import com.influence.domain.post.dto.PostRequestDTO;
 import com.influence.domain.post.dto.PostResponseDTO;
+import com.influence.domain.post.service.PostService;
 import com.influence.domain.postinfluencer.service.PostInfluencerService;
 import com.influence.global.S3UploadService;
 

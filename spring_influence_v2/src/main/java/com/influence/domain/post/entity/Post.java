@@ -2,7 +2,6 @@ package com.influence.domain.post.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,9 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.influence.domain.BaseEntity;
 import com.influence.domain.postinfluencer.entity.PostInfluencer;
 import com.influence.domain.user.entity.User;
-import com.influence.global.BaseEntity;
 
 import lombok.Data;
 

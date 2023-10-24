@@ -1,10 +1,5 @@
 package com.influence.domain.user.entity;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,14 +7,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.CreationTimestamp;
-
+import com.influence.domain.BaseEntity;
 import com.influence.domain.user.RoleType;
-import com.influence.global.BaseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

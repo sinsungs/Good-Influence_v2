@@ -1,5 +1,19 @@
 package com.influence.domain.orders.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.influence.domain.meet.entity.Meet;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
@@ -8,11 +22,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.influence.domain.meet.entity.Meet;
+import com.influence.domain.user.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

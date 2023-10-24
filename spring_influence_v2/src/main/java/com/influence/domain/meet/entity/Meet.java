@@ -13,7 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.influence.global.BaseEntity;
+import com.influence.domain.BaseEntity;
+import com.influence.domain.meetuser.entity.MeetUser;
+import com.influence.domain.orders.entity.Orders;
+import com.influence.domain.user.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
