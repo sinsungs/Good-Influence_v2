@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.influence.domain.meet.dto.MeetDTO;
 import com.influence.domain.meet.entity.Meet;
+import com.influence.domain.meet.mapper.MeetMapper;
 import com.influence.domain.meet.repository.MeetRepository;
 import com.influence.domain.meetuser.entity.MeetUser;
 import com.influence.domain.user.entity.User;
@@ -23,18 +26,26 @@ public class MeetService {
 	
 	private final UserRepository userRepository;
 	private final MeetRepository meetRepository;
+	private final MeetMapper meetMapper;
 	
-    
-    public Meet createMeet(MeetDTO dto) {
+	
+    // 소셜 모임 생성
+	@Transactional
+    public Boolean createMeet(MeetDTO dto, Authentication authentication) {
+    	
+    	dto.setWriter(authentication.getName());
     	
     	User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
     	
-    	Meet meet = dtoToEntity(dto, user);
+    	Meet meet = meetMapper.dtoToEntity(dto, user);
+    	
+    	meetRepository.save(meet);
 
-        return meetRepository.save(meet);
+        return true;
     }
 
-    
+	
+    // 소셜 모임 전체 조회
     public List<MeetDTO> listMeet() {
     	
         List<Meet> meets = meetRepository.findAll();
@@ -42,44 +53,38 @@ public class MeetService {
         List<MeetDTO> dtoList = new ArrayList<>();
         
 	     for (Meet meet : meets) {
-	      dtoList.add(entityToDTO(meet));
+	      dtoList.add(meetMapper.entityToDTO(meet));
 	     }
 	  
 	     return dtoList;
-    	
     }
     
     
-    public String updateMeet(Long meetId, MeetDTO dto) {
+    // 소셜 모임 정보 수정 
+	@Transactional
+    public Boolean updateMeet(Long meetId, MeetDTO dto) {
+		
         Meet meet = meetRepository.findById(meetId).orElse(null);
-        
+
         if (meet != null) {
-            meet.setTitle(dto.getTitle());
-            meet.setContent(dto.getContent());
-            meet.setMaxPlayers(dto.getMaxplayers());
-            meet.setCurrentPlayers(dto.getCurrentPlayers());
-            meet.setRegion(dto.getRegion());
-            meet.setResult(dto.getResult());
-            
-            // Update other properties
-            
+        	
+            meet = meetMapper.putToEntity(dto);
+
             meetRepository.save(meet);
-            return "수정 완료"; 
+            
+            return true;
         }
 
-        return null; // Meet not found
+        return null; 
     }
+	
 
-    
+	// 소셜 모임 삭제 
+	@Transactional
     public boolean deleteMeet(Long meetId) {
     	
         Optional<Meet> optionalMeet = meetRepository.findById(meetId);
-        
-//        if (optionalMeet.isPresent()) {
-//            meetRepository.deleteById(meetId);
-//            return true;
-//        }
-//        
+           
         if (optionalMeet.isPresent()) {
             Meet meet = optionalMeet.get();
             
@@ -101,42 +106,5 @@ public class MeetService {
         return false; // Meet not found
     }
     
-    
-    // Mapper 구역 
-	private Meet dtoToEntity(MeetDTO dto, User user) {
-		
-        Meet meet = Meet.builder()
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .maxPlayers(dto.getMaxplayers())
-                .currentPlayers(dto.getCurrentPlayers())
-                .region(dto.getRegion())
-                .result(dto.getResult())
-                .meettime(dto.getMeettime())
-                .result("신청가능")
-                .user(user)
-                .build();
-		
-		return meet;
-	}
-	
-	private MeetDTO entityToDTO(Meet meet) {
-		
-		MeetDTO meetDTO = MeetDTO.builder()
-				.meetid(meet.getMeetid())
-	            .title(meet.getTitle())
-                .content(meet.getContent())
-                .maxplayers(meet.getMaxPlayers())
-                .currentPlayers(meet.getCurrentPlayers())
-                .region(meet.getRegion())
-                .result(meet.getResult())
-                .meettime(meet.getMeettime())
-                .writer(meet.getUser().getUsername())
-				.build();
-		
-		return meetDTO;
-		
-	}
-    
-
+  
 }
