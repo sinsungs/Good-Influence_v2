@@ -20,10 +20,6 @@ public class PostResponseDTO {
 
     private Long ino;
     private String name;
-    
-    
-    private Long secondino;
-    private Long thirdino;
 
     private String writer;
     

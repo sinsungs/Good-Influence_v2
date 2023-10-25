@@ -12,32 +12,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.influence.domain.BaseEntity;
-import com.influence.domain.postinfluencer.entity.PostInfluencer;
+import com.influence.domain.influencer.entity.Influencer;
 import com.influence.domain.user.entity.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-public class Post extends BaseEntity{
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long pno;
-	
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pno;
+    
 	private String title;
 	private String content;	
 	
 	private String imageUrl; // 이미지 파일의 경로나 URL을 저장할 필드
-	
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<PostInfluencer> postYoutubers = new ArrayList<>();
-    
+
     @ManyToOne 
-    @JoinColumn(name = "user_id") // 외래키를 가리킬 컬럼 이름 지정
+    @JoinColumn(name = "user_id")
     private User user;
     
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostInfluencer> postInfleucners = new ArrayList<>();
     
-}
 
+
+}

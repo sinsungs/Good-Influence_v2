@@ -1,4 +1,4 @@
-package com.influence.domain.postinfluencer.repository;
+package com.influence.domain.post.repository;
 
 import java.util.List;
 
@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.influence.domain.influencer.entity.Influencer;
 import com.influence.domain.post.entity.Post;
-import com.influence.domain.postinfluencer.entity.PostInfluencer;
-
+import com.influence.domain.post.entity.PostInfluencer;
 
 
 public interface PostInfluencerRepository extends JpaRepository<PostInfluencer, Long> {
@@ -25,6 +24,12 @@ public interface PostInfluencerRepository extends JpaRepository<PostInfluencer, 
 
 
 	PostInfluencer findByInfluencerAndPost(Influencer influencer, Post post);
+	
+
+//	@Query("SELECT pi.post_pno, GROUP_CONCAT(pi.influencer_ino) AS influencerIds " +
+//		       "FROM PostInfluencer pi " +
+//		       "GROUP BY pi.post_pno")
+//		List<Object[]> getGroupedPostInfluencers();
     
     
 //    @Query("SELECT mu.user FROM MeetUser mu " +

@@ -45,8 +45,6 @@ public class Meet extends BaseEntity{
     
 	private LocalDateTime meettime;
     
-//    @OneToMany(mappedBy = "meet")
-//    private List<MeetUser> meetUser = new ArrayList<>();
     
     @ManyToOne 
     @JoinColumn(name = "user_id") // 외래키를 가리킬 컬럼 이름 지정

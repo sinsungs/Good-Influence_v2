@@ -1,4 +1,4 @@
-package com.influence.domain.postinfluencer.entity;
+package com.influence.domain.post.entity;
 
 import java.sql.Timestamp;
 

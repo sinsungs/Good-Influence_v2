@@ -1,5 +1,6 @@
 package com.influence.domain.post.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.influence.domain.post.dto.PostRequestDTO;
@@ -21,23 +22,23 @@ public class PostService {
 
     
 
-    	public Long createPost(PostRequestDTO dto, String uploadedFileName) {
-    	
-    	User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
-    	
-        Post post = new Post();
-        post.setTitle(dto.getTitle());
-        post.setContent(dto.getContent());
-        post.setImageUrl(uploadedFileName);
-        post.setUser(user);
-        
-        postRepository.save(post);
-        
-        Long postId = post.getPno();
-        
-        return postId;
-//        return postYoutuber;
-    }
-    
+		public Long createPost(PostRequestDTO dto, String uploadedFileName, Authentication authentication) {
+		
+		dto.setWriter(authentication.getName());
+	
+		User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
+		
+	    Post post = new Post();
+	    post.setTitle(dto.getTitle());
+	    post.setContent(dto.getContent());
+	    post.setImageUrl(uploadedFileName);
+	    post.setUser(user);
+	    
+	    postRepository.save(post);
+	    
+	    Long postId = post.getPno();
+	    
+	    return postId;
+	}
     
 }

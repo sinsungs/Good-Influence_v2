@@ -3,6 +3,7 @@ package com.influence.domain.post.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.influence.domain.post.dto.PostRequestDTO;
 import com.influence.domain.post.dto.PostResponseDTO;
+import com.influence.domain.post.service.PostInfluencerService;
 import com.influence.domain.post.service.PostService;
-import com.influence.domain.postinfluencer.service.PostInfluencerService;
 import com.influence.global.S3UploadService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,37 +26,34 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/post")
 @RequiredArgsConstructor
-public class PostController {
+public class PostInfluencerController {
 	
-    private final PostService postService;
+	private final PostService postService;
     private final PostInfluencerService postInfluencerService;
     private final S3UploadService s3UploadService;
     
+    
+    // 인플루언서 추천 게시글 작성 
     @PostMapping("/register")
-    public  ResponseEntity<PostResponseDTO> createPost(@RequestPart PostRequestDTO dto, @RequestPart("file") MultipartFile file, 
+    public  ResponseEntity<Boolean> createPost(@RequestPart PostRequestDTO dto, @RequestPart("file") MultipartFile file, 
     		Authentication authentication) throws IOException {
     	
         // 파일 업로드 로직 추가
         String uploadedFileName = s3UploadService.saveFile(file);
         
-//        String uploadedFileName = "./img/" + file.getOriginalFilename();
-        
-    	System.out.println("정보" + authentication.getName());
-    	
-    	dto.setWriter(authentication.getName());
-    	
-    	Long pno = postService.createPost(dto, uploadedFileName);
-    	
-    	dto.setPno(pno);
-    	
-    	PostResponseDTO postResponseDTO = postInfluencerService.createInfluencerPost(dto);
-//    	List<PostResponseDTO> postResponseDTO = postInfluencerService.createInfluencerPost(dto);
-        
-        return ResponseEntity.ok(postResponseDTO);
+	  	Long pno = postService.createPost(dto, uploadedFileName, authentication);
+	  	
+    	Boolean result = postInfluencerService.createInfluencerPost(dto, pno);
+
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
     }
+
     
-    
-    
+    // 인플루언서 추천 게시글 전체 조회
     @GetMapping("/list")
     public ResponseEntity<List<PostResponseDTO>> listPost() {
     	
@@ -65,6 +63,9 @@ public class PostController {
         
     }
     
+    
+    
+    // 인플루언서 추천 게시글 삭제 => 이로직이 들어갈게 아니라 게시글자체를 삭제해야함 
     @DeleteMapping("/delete/{ino}/{pno}")
     public  ResponseEntity<String> deletePost(@PathVariable Long ino, @PathVariable Long pno) {
     	
@@ -81,21 +82,6 @@ public class PostController {
         }
         
     }
-    
-    
-//    @DeleteMapping("/delete/{meetId}")
-//    public ResponseEntity<String> deleteMeet(@PathVariable Long meetId, Authentication authentication) {
-//    	
-//        boolean deleted = meetService.deleteMeet(meetId);
-//        
-//        String result = "삭제했습니다.";
-//        
-//        if (deleted) {
-//            return ResponseEntity.ok(result);
-//        }
-//        
-//        return ResponseEntity.notFound().build();
-//    }
     
     
 }

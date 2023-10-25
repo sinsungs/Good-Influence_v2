@@ -14,7 +14,6 @@ function RecommendPost() {
 
   // 모달창 State
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedField, setSelectedField] = useState(null);
 
   // 검색창 State
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,8 +21,6 @@ function RecommendPost() {
 
   // 인플루언서 State
   const [ino, setino] = useState(null);
-  const [secondino, setSecondino] = useState(null);
-  const [thirdino, setThirdino] = useState(null);
 
   // 이미지 State
   const [file, setFile] = useState(null);
@@ -35,12 +32,13 @@ function RecommendPost() {
   };
 
 
-const handleModalOpen = (field) => {
-  setSelectedField(field);
+const handleModalOpen = () => {
+
   setIsModalOpen(true);
 };
 
 const handleModalClose = () => {
+  
   setIsModalOpen(false);
 };
 // 모달창 닫기 End
@@ -80,10 +78,9 @@ const handleSearchSubmit = async (e) => {
     const title = event.target.elements.title.value;
     const content = event.target.elements.content.value;
     const ino = event.target.elements.ino.value;
-    const secondino = event.target.elements.secondino.value;
-    const thirdino = event.target.elements.thirdino.value;
 
-    if (!title || !content || !ino || !secondino || !thirdino || !file) {
+
+    if (!title || !content || !ino || !file) {
       alert('모든 필수 입력란을 채워주세요.');
       return;
     }
@@ -92,8 +89,6 @@ const handleSearchSubmit = async (e) => {
       title: title,
       content: content,
       ino: ino,
-      secondino: secondino,
-      thirdino : thirdino
     };
 
 
@@ -137,26 +132,10 @@ const handleSearchSubmit = async (e) => {
 
 
 // 선택한 인플루언서 값을 수정하는 함수
-const handleInfluencerEdit = (field, influencer) => {
-  if (field === 'ino') {
-    if ((secondino === influencer) || (thirdino === influencer)) {
-      alert('중복된 추천 인플루언서 입니다.');
-      return;
-    }
+const handleInfluencerEdit = (influencer) => {
+
     setino(influencer);
-  } else if (field === 'secondino') {
-    if ((ino === influencer) || (thirdino === influencer)) {
-      alert('중복된 추천 인플루언서 입니다.');
-      return;
-    }
-    setSecondino(influencer);
-  } else if (field === 'thirdino') {
-    if ((ino === influencer) || (secondino === influencer)) {
-      alert('중복된 추천 인플루언서 입니다.');
-      return;
-    }
-    setThirdino(influencer);
-  }
+
   setIsModalOpen(false); // 모달 창 닫기
 };
 
@@ -195,30 +174,11 @@ const handleInfluencerEdit = (field, influencer) => {
               <div style={{ height: '30px' }}></div> {/* 마진을 통해 간격 추가 */}
 
               <label>추천 인플루언서</label>
-              <p>* 인플루언서 3명을 모두 선택해 주세요.</p>
 
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <div className="rectangle"   onClick={() => handleModalOpen('ino')}>
-                {/* <img src={rectangleImage} alt="Rectangle" className="rectangle-image" /> */}
               </div>
               <input type="text" style={{width:'200px'}}className="custom-input" name="ino" value={ino} onClick={() => handleModalOpen('ino')} placeholder="첫번째 인플루언서를 선택해주세요."   readOnly/>
-              <div style={{ height: '30px' }}></div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div className="rectangle"   onClick={() => handleModalOpen('secondino')}>
-                {/* <img src={rectangleImage} alt="Rectangle" className="rectangle-image" /> */}
-              </div>
-              <input type="text" style={{width:'200px'}} className="custom-input" name="secondino" value={secondino} onClick={() => handleModalOpen('secondino')} placeholder="두번째 인플루언서를 선택해주세요."   readOnly/>
-              <div style={{ height: '30px' }}></div>
-              </div>
-
-
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div className="rectangle"   onClick={() => handleModalOpen('thirdino')}>
-                {/* <img src={rectangleImage} alt="Rectangle" className="rectangle-image" /> */}
-              </div>
-              <input type="text" style={{width:'200px'}} className="custom-input" name="thirdino" value={thirdino} onClick={() => handleModalOpen('thirdino')} placeholder="세번째 인플루언서를 선택해주세요."   readOnly/>
               <div style={{ height: '30px' }}></div>
               </div>
 
@@ -248,7 +208,7 @@ const handleInfluencerEdit = (field, influencer) => {
             {searchResults.map((influencer) => (
               <div
                 key={influencer.ino}
-                onClick={() => handleInfluencerEdit(selectedField, influencer.ino)}
+                onClick={() => handleInfluencerEdit(influencer.ino)}
                 // onClick={() => handleInfluencerSelection(selectedField, influencer.ino)}
               >
                 {influencer.ino}
