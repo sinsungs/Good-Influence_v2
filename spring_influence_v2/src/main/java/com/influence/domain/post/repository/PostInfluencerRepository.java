@@ -26,15 +26,4 @@ public interface PostInfluencerRepository extends JpaRepository<PostInfluencer, 
 	PostInfluencer findByInfluencerAndPost(Influencer influencer, Post post);
 	
 
-//	@Query("SELECT pi.post_pno, GROUP_CONCAT(pi.influencer_ino) AS influencerIds " +
-//		       "FROM PostInfluencer pi " +
-//		       "GROUP BY pi.post_pno")
-//		List<Object[]> getGroupedPostInfluencers();
-    
-    
-//    @Query("SELECT mu.user FROM MeetUser mu " +
-//            "GROUP BY mu.user " +
-//            "ORDER BY COUNT(mu.meet) DESC")
-//     List<User> findTop5UsersWithMostMeets();
-
 }

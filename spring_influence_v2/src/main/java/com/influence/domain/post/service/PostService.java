@@ -28,11 +28,12 @@ public class PostService {
 	
 		User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
 		
-	    Post post = new Post();
-	    post.setTitle(dto.getTitle());
-	    post.setContent(dto.getContent());
-	    post.setImageUrl(uploadedFileName);
-	    post.setUser(user);
+	    Post post = Post.builder()
+	            .title(dto.getTitle())
+	            .content(dto.getContent())
+	            .imageUrl(uploadedFileName)
+	            .user(user)
+	            .build();
 	    
 	    postRepository.save(post);
 	    

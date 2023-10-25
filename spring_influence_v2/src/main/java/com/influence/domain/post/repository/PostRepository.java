@@ -23,13 +23,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "ORDER BY COUNT(pi.influencer) DESC")
 	List<Object[]> findTop5UsersWithMostRecommend();
 
-
-//	PostInfluencer findByInfluencerAndPost(Influencer influencer, Post post);
-    
-    
-//    @Query("SELECT mu.user FROM MeetUser mu " +
-//            "GROUP BY mu.user " +
-//            "ORDER BY COUNT(mu.meet) DESC")
-//     List<User> findTop5UsersWithMostMeets();
-
 }

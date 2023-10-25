@@ -65,21 +65,17 @@ public class PostInfluencerController {
     
     
     
-    // 인플루언서 추천 게시글 삭제 => 이로직이 들어갈게 아니라 게시글자체를 삭제해야함 
+    // 인플루언서 추천 게시글 삭제
     @DeleteMapping("/delete/{ino}/{pno}")
-    public  ResponseEntity<String> deletePost(@PathVariable Long ino, @PathVariable Long pno) {
+    public  ResponseEntity<Boolean> deletePost(@PathVariable Long ino, @PathVariable Long pno) {
     	
-        boolean deleted = postInfluencerService.deleteInfluencerPost(ino, pno);
+        boolean result = postInfluencerService.deleteInfluencerPost(ino, pno);
         
-        if (deleted) {
-        	
-            return ResponseEntity.ok("삭제되었습니다.");
-            
-        } else {
-        	
-            return ResponseEntity.ok("실패했습니다.");
-            
-        }
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
         
     }
     
