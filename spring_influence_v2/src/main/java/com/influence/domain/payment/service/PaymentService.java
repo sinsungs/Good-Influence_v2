@@ -24,7 +24,6 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-@Transactional
 public class PaymentService {
 	
 	private final PaymentRepository paymentRepository;
@@ -36,7 +35,7 @@ public class PaymentService {
 	private KakaoReadyResponse kakaoReady;
 	
 	
-	
+	// 카카오 페이 결제 성공 시 보유금 충전 
     public Payment savePayment(PaymentDTO dto) {
     	
         User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
@@ -45,9 +44,7 @@ public class PaymentService {
         
         User depositUser = userRepository.save(user);
         
-        
         Payment payment = new Payment();
-//        payment.setPost(post);
         payment.setUser(depositUser);
         payment.setDeposit(dto.getDeposit());
         payment.setPaytype("kakaopay");
@@ -56,6 +53,7 @@ public class PaymentService {
     }
     
     
+    // 카카오 페이 결제 요청 
     public String kakaoPayReady(Authentication authentication) {
     	
     	// 카카오페이 요청 양식
@@ -91,6 +89,8 @@ public class PaymentService {
     	
     }
     
+    
+    // 카카오페이 결제 성공 
     public KakaoApproveResponse ApproveResponse(String pgToken) {
 
         // 카카오 요청
@@ -139,5 +139,6 @@ public class PaymentService {
     	
     	return httpHeaders;
     }
+    
     
 }

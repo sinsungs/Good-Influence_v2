@@ -19,39 +19,40 @@ public class PaymentController {
 
 	private final PaymentService paymentService;
 	
-//    @PostMapping("/payment")
-//    public ResponseEntity<Payment> createPayment(@RequestBody PaymentDTO paymentDTO) {
-//        Payment createdPayment = paymentService.savePayment(paymentDTO);
-//        return new ResponseEntity<>(createdPayment, HttpStatus.CREATED);
-//    }
-    
+   
+	// 카카오 페이 결제 요청 
     @GetMapping("/ready")
     public String readyToKakaoPay(Authentication authentication) {
 
         return paymentService.kakaoPayReady(authentication);
     }
     
+    
+    // 카카오페이 결제 성공 
     @GetMapping("/success")
     public ResponseEntity<String> afterPayRequest(@RequestParam("pg_token") String pgToken) {
 
         KakaoApproveResponse kakaoApprove = paymentService.ApproveResponse(pgToken);
         
-//        return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
           return ResponseEntity.ok("보유금이 충전되었습니다.");
     }
     
+    
+    // 카카오페이 결제 취소 
     @GetMapping("/cancel")
     public String cancel() {
     	
-//    	throw new BusinessLogicException(ExceptionCode.PAY_CANCEL);
     	return "취소했습니다";
     	
     }
 
+    
+    // 카카오페이 결제 실패 
     @GetMapping("/fail")
     public String fail() {
     	
-//    	throw new BusinessLogicException(ExceptionCode.PAY_FAILED);
     	return "실패했습니다";
     }
+    
+    
 }
