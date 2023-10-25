@@ -1,5 +1,6 @@
 package com.influence.domain.meetuser.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +27,14 @@ public class MeetUserService {
 	private final MeetUserRepository meetUserRepository;
 	private final OrdersRepository ordersRepository;
 
+	
+	// 소셜 모임 참가 
 	@Transactional
-    public String registerMeet(MeetUserDTO dto) {
+    public String registerMeet(Long id, MeetUserDTO dto, Authentication authentication) {
+		
+    	dto.setEmail(authentication.getName());
+    	dto.setMeetid(id);
+    	dto.setPrice(dto.getPrice());
     	
         User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
         Meet meet = meetRepository.findById(dto.getMeetid()).orElse(null);
@@ -90,9 +97,15 @@ public class MeetUserService {
         return "모임을 참여했습니다.";
         
     }
-    
+	
+	
+		// 소셜 모임 참가 취소 
 		@Transactional
-	    public String deleteMeeting(MeetUserDTO dto) {
+	    public String deleteMeeting(Long id, MeetUserDTO dto,  Authentication authentication) {
+			
+	    	dto.setEmail(authentication.getName());
+	    	dto.setMeetid(id);
+	    	dto.setPrice(10000);
 	    	
 	        User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
 	        Meet meet = meetRepository.findById(dto.getMeetid()).orElse(null);
@@ -130,5 +143,4 @@ public class MeetUserService {
 	    }
     
     
-
 }

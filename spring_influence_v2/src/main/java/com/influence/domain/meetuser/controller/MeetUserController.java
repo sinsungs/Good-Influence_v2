@@ -25,28 +25,16 @@ public class MeetUserController {
     @PostMapping("/register/{id}")
     public ResponseEntity<String> registerMeeting(@PathVariable Long id, @RequestBody MeetUserDTO dto,  Authentication authentication) {
     	
-//    	MeetUser registerMeet ;
-    	System.out.println("결제금액" + dto.getPrice());
-    
-    	
-    	dto.setEmail(authentication.getName());
-    	dto.setMeetid(id);
-    	dto.setPrice(dto.getPrice());
-    	
-    	String sss = meetuserService.registerMeet(dto);
+    	String result = meetuserService.registerMeet(id, dto, authentication);
         
-        return ResponseEntity.ok(sss);
+        return ResponseEntity.ok(result);
     }
     
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMeeting(@PathVariable Long id, MeetUserDTO dto,  Authentication authentication) {
     	
-    	dto.setEmail(authentication.getName());
-    	dto.setMeetid(id);
-    	dto.setPrice(10000);
-    	
-        String result = meetuserService.deleteMeeting(dto);
+        String result = meetuserService.deleteMeeting(id, dto, authentication);
         
         return ResponseEntity.ok(result);
     }
