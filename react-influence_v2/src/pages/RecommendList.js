@@ -1,14 +1,14 @@
-import logo from '../logo.svg';
 import '../App.css';
-import $ from "jquery";
 import axios from 'axios';
-import data from '../data/data.js';
 import React, {useState, useEffect} from 'react';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from './JwtTokenState';
+import { useNavigate } from 'react-router-dom';
 
 
 function RecommendList() {
+
+  const navigate = useNavigate();
 
   // Recoil을 사용하여 JWT 토큰을 가져옵니다
   const jwtToken = useRecoilValue(tokenState); 
@@ -61,10 +61,27 @@ function RecommendList() {
 
   }
 
+  const handleRectangleClick = () => {
+
+    if (!jwtToken) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    navigate('/post');
+    
+
+  };
+
   return (
     <div className="App">
       <div className='back'>
       <div className="container">
+      <div className="search">
+            <button className="login-button" onClick={handleRectangleClick}>
+                추천 게시글 작성
+            </button>
+        </div>
         {Influencer.map(Influencer => (
           <div className="box" key={Influencer.ino}>
             <div className="box-header">

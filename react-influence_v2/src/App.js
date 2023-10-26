@@ -20,7 +20,10 @@ import MyPage from './pages/MyPage';
 import KakaoLoginHandeler from './pages/KakaoLoginHandeler'
 
 import Quill from './pages/Quill';
-import Admin from './pages/Admin'
+import Admin from './pages/Admin';
+
+import ReviewList from './pages/PostReviewList';
+import ReviewPost from './pages/PostReview'
 
 
 function App() {
@@ -52,7 +55,7 @@ function App() {
         <Header />
 
         {/* <Banner /> */}
-        <Category />
+        {/* <Category /> */}
 
 
         <Routes>
@@ -73,6 +76,10 @@ function App() {
           <Route path="/admin" element={<Admin/>}/>
 
           <Route path="/login/oauth2/callback/kakao" element={<KakaoLoginHandeler />} />
+
+          <Route path="/reviewlist" element={<ReviewList/>}/>
+          <Route path="/reviewpost" element={<ReviewPost/>}/>
+
 
         </Routes>
 

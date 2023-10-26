@@ -169,6 +169,12 @@ function Header() {
               <img src="https://plab-football.s3.amazonaws.com/static/img/explore_heart.svg" />
               <p>인플루언서<br/>소셜 모임</p>
             </Link>
+
+            <Link to="/reviewlist">
+              <img src="https://plab-football.s3.amazonaws.com/static/img/explore_dribbler.svg" />
+              <p>소셜 모임<br/> 후기 글</p>
+            </Link>
+
             <Link to="/influencer">
               <img src="https://plab-football.s3.amazonaws.com/static/img/explore_earlybird.svg" />
               <p>인플루언서<br/>둘러보기</p>
@@ -177,14 +183,10 @@ function Header() {
               <img src="https://plab-football.s3.amazonaws.com/static/img/explore_seeding.svg" />
               <p>인플루언서<br/>추천 글</p>
             </Link>
-            <Link to="/post">
-
-              <img src="https://plab-football.s3.amazonaws.com/static/img/explore_dribbler.svg" />
-              <p>인플루언서<br/>추천글 작성하기</p>
-            </Link>
+ 
             <Link to="/rank">
               <img src="https://plab-football.s3.amazonaws.com/static/img/explore_fire.svg" />
-              <p>HOT 인플루언서</p>
+              <p>랭킹 통계</p>
             </Link>
 
           </div>
