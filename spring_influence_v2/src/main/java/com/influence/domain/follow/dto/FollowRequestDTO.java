@@ -1,4 +1,4 @@
-package com.influence.domain.follow;
+package com.influence.domain.follow.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.influence.domain.follow;
+package com.influence.domain.follow.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

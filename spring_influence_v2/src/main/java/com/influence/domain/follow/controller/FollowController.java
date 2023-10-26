@@ -1,10 +1,13 @@
-package com.influence.domain.follow;
+package com.influence.domain.follow.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.influence.domain.follow.dto.FollowRequestDTO;
+import com.influence.domain.follow.service.FollowService;
 
 import lombok.RequiredArgsConstructor;
 

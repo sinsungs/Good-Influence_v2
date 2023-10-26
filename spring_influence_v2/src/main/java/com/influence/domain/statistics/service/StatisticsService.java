@@ -132,10 +132,6 @@ private RankMeetDTO entityToDTO(User user) {
 		
 			return dto;
 		}
-
-	
-	
-	
 	
 	public int meetRank() {
 		// TODO Auto-generated method stub

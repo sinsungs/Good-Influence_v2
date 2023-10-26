@@ -19,6 +19,8 @@ public class AdminService {
 	
 	private final UserRepository userRepository;
 	
+	
+	// 모든 유저 조회
     public List<UserDTO> getAllUsers() {
     	
     	List<User> users = userRepository.findAll();
@@ -35,6 +37,7 @@ public class AdminService {
         
     }
     
+	// 유저 회원 탈퇴 
     public void deleteUserById(Long userId) {
     	
         userRepository.deleteById(userId);

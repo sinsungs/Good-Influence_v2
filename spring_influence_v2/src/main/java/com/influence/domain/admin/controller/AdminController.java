@@ -29,9 +29,8 @@ public class AdminController {
 	private final AdminService adminService;
 	private final UserService userService;
 
-	// 미팅 승인 
-	// 모든 미팅 관리기능 
 
+	// 모든 유저 조회
     @GetMapping("/user")
     public List<UserDTO> listUsers() {
     	
@@ -39,7 +38,8 @@ public class AdminController {
         
     }
     
-	// 모든 유저 관리 
+    
+	// 유저 회원 탈퇴 
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         try {
@@ -55,7 +55,8 @@ public class AdminController {
         }
     }
     
-	// 인플루언서 등록 
+    
+	// 유저 인플루언서 등록 
     @PatchMapping("/verify/{userId}")
     public ResponseEntity<String> updateUser(@PathVariable Long userId) {
         try {

@@ -1,6 +1,8 @@
-package com.influence.domain.follow;
+package com.influence.domain.follow.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.influence.domain.follow.entity.Follow;
 
 
 

@@ -1,7 +1,10 @@
-package com.influence.domain.follow;
+package com.influence.domain.follow.service;
 
 import org.springframework.stereotype.Service;
 
+import com.influence.domain.follow.dto.FollowRequestDTO;
+import com.influence.domain.follow.entity.Follow;
+import com.influence.domain.follow.repository.FollowRepository;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
 
