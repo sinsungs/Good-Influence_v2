@@ -3,6 +3,7 @@ package com.influence.domain.post.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,11 @@ public class PostReviewController {
 
     	boolean result = postReviweService.createPost(dto, uploadedFileName, authentication);  	 
         
-        return ResponseEntity.ok(result);
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
     }
     
     
@@ -52,40 +57,20 @@ public class PostReviewController {
         return ResponseEntity.ok(response);
         
     }
+     
     
-
-//    @DeleteMapping("/delete/{ino}/{pno}")
-//    public  ResponseEntity<String> deletePost(@PathVariable Long ino, @PathVariable Long pno) {
-//    	
-//        boolean deleted = postInfluencerService.deleteInfluencerPost(ino, pno);
-//        
-//        if (deleted) {
-//        	
-//            return ResponseEntity.ok("삭제되었습니다.");
-//            
-//        } else {
-//        	
-//            return ResponseEntity.ok("실패했습니다.");
-//            
-//        }
-//        
-//    }
-//    
-    
-//    @DeleteMapping("/delete/{meetId}")
-//    public ResponseEntity<String> deleteMeet(@PathVariable Long meetId, Authentication authentication) {
-//    	
-//        boolean deleted = meetService.deleteMeet(meetId);
-//        
-//        String result = "삭제했습니다.";
-//        
-//        if (deleted) {
-//            return ResponseEntity.ok(result);
-//        }
-//        
-//        return ResponseEntity.notFound().build();
-//    }
-    
+    // 소셜 모임 후기 게시글 삭제 
+    @DeleteMapping("/delete/{prno}")
+    public ResponseEntity<Boolean> deletePost(@PathVariable Long prno) {
+    	
+        boolean result = postReviweService.deletePost(prno);
+        
+	    if (result) {
+	        return ResponseEntity.ok(true);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+	    }
+}
     
 }
     

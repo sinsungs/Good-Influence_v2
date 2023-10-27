@@ -2,10 +2,14 @@ package com.influence.domain.post.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.influence.domain.meet.entity.Meet;
+import com.influence.domain.meetuser.entity.MeetUser;
 import com.influence.domain.post.dto.PostResponseDTO;
 import com.influence.domain.post.dto.PostReviewDTO;
 import com.influence.domain.post.entity.PostInfluencer;
@@ -36,12 +40,7 @@ public class PostReviewService{
 	
 		User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
 		
-		PostReview postReview = PostReview.builder()
-	            .title(dto.getTitle())
-	            .content(dto.getContent())
-	            .imageUrl(uploadedFileName)
-	            .user(user)
-	            .build();
+		PostReview postReview = postReviewMaper.dtoToEntity(dto, uploadedFileName, user);
 	    
 	    postReviewRepository.save(postReview);
 	    
@@ -62,27 +61,16 @@ public class PostReviewService{
        
        return dtoList;
    }
-    
-    
-   // 인플루언서 추천 게시글 삭제 
-//   public boolean deleteInfluencerPost(Long ino, Long pno) {
-//  	 
-//  	 
-//	        Influencer influencer = influencerRepository.findById(ino).orElse(null);
-//	        Post post = postRepository.findById(pno).orElse(null);
-//
-//  	 	PostInfluencer postInfluencers = postInfluencerRepository.findByInfluencerAndPost(influencer, post);
-//
-//	        if (postInfluencers == null) {
-//	            return false;
-//	        }
-//	        
-//	        postInfluencerRepository.delete(postInfluencers);
-//       
-//		return true;
-//	}
 
-	
-	
+
+	public boolean deletePost(Long prno) {
+		
+		PostReview postReview = postReviewRepository.findById(prno).orElse(null);
+		
+		postReviewRepository.delete(postReview);
+		
+		return true;
+	}
+    
     	
 }

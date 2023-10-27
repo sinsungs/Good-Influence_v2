@@ -2,11 +2,9 @@ package com.influence.domain.post.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.influence.domain.influencer.entity.Influencer;
 import com.influence.domain.post.dto.PostReviewDTO;
-import com.influence.domain.post.entity.Post;
-import com.influence.domain.post.entity.PostInfluencer;
 import com.influence.domain.post.entity.PostReview;
+import com.influence.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,31 +13,31 @@ import lombok.RequiredArgsConstructor;
 public class PostReviewMapper {
 	
     
-	public PostInfluencer dtoToEntity( Post post, Influencer influencer) {
+	public PostReview dtoToEntity(PostReviewDTO dto, String uploadedFileName, User user) {
 		  
-        return PostInfluencer.builder()
-                .post(post)
-                .influencer(influencer)
-                .build();
+		return PostReview.builder()
+	            .title(dto.getTitle())
+	            .content(dto.getContent())
+	            .imageUrl(uploadedFileName)
+	            .user(user)
+	            .build();
         
 	}
+	
 	
 	public PostReviewDTO entityToDTO(PostReview postReview) {
 		
 		return PostReviewDTO.builder()
+				.prno(postReview.getPrno())
 				.title(postReview.getTitle())
 				.content(postReview.getContent())
-				.writer(postReview.getUser())
+	            .imageurl(postReview.getImageUrl())
+				.writer(postReview.getUser().getUsername())
             
 		   .build();
 		
 	}
-    Post post = Post.builder()
-            .title(dto.getTitle())
-            .content(dto.getContent())
-            .imageUrl(uploadedFileName)
-            .user(user)
-            .build();
+
     
     
     
