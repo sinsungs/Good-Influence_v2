@@ -1,6 +1,5 @@
 import '../App.css';
 import axios from 'axios';
-import data from '../data/data.js';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from './JwtTokenState';
 
