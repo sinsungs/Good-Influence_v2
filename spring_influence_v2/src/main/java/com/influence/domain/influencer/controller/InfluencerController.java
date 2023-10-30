@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.influence.domain.influencer.dto.InfluencerDTO;
 import com.influence.domain.influencer.entity.Influencer;
 import com.influence.domain.influencer.service.InfluencerService;
-import com.influence.global.S3UploadService;
+import com.influence.global.utils.S3UploadService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -51,9 +51,6 @@ public class InfluencerController {
 	public ResponseEntity<Influencer> createInfluencer( @RequestPart InfluencerDTO dto,  @RequestPart("file") MultipartFile file) throws IOException {
 		
         String uploadedFileName = s3UploadService.saveFile(file);
-        
-        // 파일 업로드 로직 추가
-//        String uploadedFileName = "./img/" + file.getOriginalFilename();
         
         Influencer createdInfluencer = influencerService.createInfluencer(dto, uploadedFileName);
         

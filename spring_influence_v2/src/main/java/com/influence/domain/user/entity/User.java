@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.influence.domain.BaseEntity;
 import com.influence.domain.user.RoleType;
+import com.influence.global.utils.BaseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

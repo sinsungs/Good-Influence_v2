@@ -1,4 +1,4 @@
-package com.influence.global;
+package com.influence.global.utils;
 
 import java.io.IOException;
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.influence.domain.meet.dto.MeetDTO;
 import com.influence.domain.meet.entity.Meet;
 import com.influence.domain.meet.service.MeetService;
-import com.influence.global.S3UploadService;
+import com.influence.global.utils.S3UploadService;
 
 import lombok.RequiredArgsConstructor;
 

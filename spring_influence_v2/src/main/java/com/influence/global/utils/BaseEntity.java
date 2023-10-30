@@ -1,4 +1,4 @@
-package com.influence.domain;
+package com.influence.global.utils;
 
 import java.time.LocalDateTime;
 

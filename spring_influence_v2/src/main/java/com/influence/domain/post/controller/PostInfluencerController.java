@@ -19,7 +19,7 @@ import com.influence.domain.post.dto.PostRequestDTO;
 import com.influence.domain.post.dto.PostResponseDTO;
 import com.influence.domain.post.service.PostInfluencerService;
 import com.influence.domain.post.service.PostService;
-import com.influence.global.S3UploadService;
+import com.influence.global.utils.S3UploadService;
 
 import lombok.RequiredArgsConstructor;
 
