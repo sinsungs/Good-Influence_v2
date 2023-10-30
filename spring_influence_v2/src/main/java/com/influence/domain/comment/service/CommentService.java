@@ -32,6 +32,8 @@ public class CommentService {
 	// 댓글 생성 
 	public boolean createComment(Long prno, CommentDTO dto, Authentication authentication) {
 		
+		System.out.println("content : "+dto.getContent());
+		
 		dto.setWriter(authentication.getName());
 		
 		User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
@@ -39,6 +41,8 @@ public class CommentService {
 		PostReview post = postReviewRepository.findById(prno).orElse(null);
 		
 		Comment comment = commentMapper.dtoToEntity(dto, user, post);
+		
+		commentRepository.save(comment);
 		
 		return true;
 	}

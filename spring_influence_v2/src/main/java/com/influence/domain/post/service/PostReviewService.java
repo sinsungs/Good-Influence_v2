@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.influence.domain.comment.dto.CommentDTO;
+import com.influence.domain.comment.entity.Comment;
 import com.influence.domain.meet.entity.Meet;
 import com.influence.domain.meetuser.entity.MeetUser;
 import com.influence.domain.post.dto.PostResponseDTO;
@@ -48,21 +53,30 @@ public class PostReviewService{
 }
 
 
-    // 인플루언서 추천 게시글 전체 조회
-    public List<PostReviewDTO> getList() {
-   	
-       List<PostReview> PostReviews = postReviewRepository.findAll();
-       
-       List<PostReviewDTO> dtoList = new ArrayList<>();
-       
-       for (PostReview postReview : PostReviews) {
-           dtoList.add(postReviewMaper.entityToDTO(postReview));
-       }
-       
-       return dtoList;
-   }
+    // 소셜 모임 후기 게시글 전체 조회
+//    public List<PostReviewDTO> getList() {
+//   	
+//       List<PostReview> PostReviews = postReviewRepository.findAll();
+//       
+//       List<PostReviewDTO> dtoList = new ArrayList<>();
+//       
+//       for (PostReview postReview : PostReviews) {
+//           dtoList.add(postReviewMaper.entityToDTO(postReview));
+//       }
+//       
+//       return dtoList;
+//   }
+	public Page<PostReviewDTO> getList(int page, int size) {
+		
+	    Pageable pageable = PageRequest.of(page, size);
+	    
+	    Page<PostReview> postReviews = postReviewRepository.findAll(pageable);
+	    
+	    return postReviews.map(postReviewMaper::entityToDTO);
+	}
+	
 
-
+	// 소셜 모임 후기 게시글 삭제 
 	public boolean deletePost(Long prno) {
 		
 		PostReview postReview = postReviewRepository.findById(prno).orElse(null);
@@ -71,6 +85,16 @@ public class PostReviewService{
 		
 		return true;
 	}
-    
-    	
+
+
+	public PostReviewDTO getPost(Long prno) {
+		
+		PostReview postReview = postReviewRepository.findById(prno).orElse(null);
+		
+		PostReviewDTO dto = postReviewMaper.entityToDTO(postReview);
+		
+		return dto;
+	}
+
+
 }

@@ -1,7 +1,5 @@
 package com.influence.domain.post.dto;
 
-import com.influence.domain.user.entity.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +11,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostReviewDTO {
+public class PostCommentDTO {
 	
 	private Long prno;
 	
@@ -22,4 +20,9 @@ public class PostReviewDTO {
 	
     private String writer;
     private String imageurl;
+    
+    private Long cno;
+    
+    private String ccontent;
+    private String cwriter;
 }
