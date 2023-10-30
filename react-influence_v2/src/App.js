@@ -23,7 +23,8 @@ import Quill from './pages/Quill';
 import Admin from './pages/Admin';
 
 import ReviewList from './pages/PostReviewList';
-import ReviewPost from './pages/PostReview'
+import ReviewPost from './pages/PostReview';
+import ReviewRead from './pages/PostReviewRead';
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
 
           <Route path="/reviewlist" element={<ReviewList/>}/>
           <Route path="/reviewpost" element={<ReviewPost/>}/>
+          <Route path="/reviewread/:prno" element={<ReviewRead/>}/>
 
 
         </Routes>
