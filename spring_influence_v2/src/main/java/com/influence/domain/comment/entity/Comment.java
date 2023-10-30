@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.influence.domain.post.entity.Post;
+import com.influence.domain.post.entity.PostReview;
 import com.influence.domain.user.entity.User;
 
 import lombok.AllArgsConstructor;
@@ -24,16 +25,16 @@ public class Comment {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long cno;
     
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "postid")
+    private PostReview post;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userid")
     private User user;
 
 
