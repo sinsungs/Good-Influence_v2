@@ -50,7 +50,7 @@ public class PostInfluencerService{
      // 인플루언서 추천 게시글 전체 조회
      public List<PostResponseDTO> getList() {
     	
-        List<PostInfluencer> postInfluencers = postInfluencerRepository.findAll();
+        List<PostInfluencer> postInfluencers = postInfluencerRepository.findAllWithPostAndInfluencer();
         
         List<PostResponseDTO> dtoList = new ArrayList<>();
         

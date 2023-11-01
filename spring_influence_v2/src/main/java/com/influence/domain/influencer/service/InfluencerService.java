@@ -80,7 +80,6 @@ public class InfluencerService{
     	
         List<Influencer> Influencers = influencerRepository.findAll();
 
-        
         List<InfluencerDTO> dtoList = new ArrayList<>();
         
 	     for (Influencer influencer : Influencers) {

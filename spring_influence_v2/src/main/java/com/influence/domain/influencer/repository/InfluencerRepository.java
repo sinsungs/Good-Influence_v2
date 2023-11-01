@@ -2,26 +2,17 @@ package com.influence.domain.influencer.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.influence.domain.influencer.entity.Influencer;
+import com.influence.domain.meet.entity.Meet;
 import com.influence.domain.user.entity.User;
 
 
 
 public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
-
-//	@Query("SELECT b, w " +
-//			" FROM Board b LEFT JOIN b.writer w " +
-//			" WHERE b.bno = :bno ")
-//	Object getYoutuberByYno(@Param("yno") Long yno);
-	
-//	@Query("SELECT y, m FROM Youtuber y LEFT JOIN y.writer m WHERE y.yno = :yno")
-//	Object getYoutuberWithWriter(@Param("yno") Long yno);
-//	
-//	@Query("SELECT y, m FROM Youtuber y LEFT JOIN y.writer m")
-//	List<Object[]> getAllYoutubersWithWriters();
 	
 	List<Influencer> findByNameLike(String query);
 
@@ -35,6 +26,9 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
 	int countMeet();
 
 	Influencer findByUser(User user);
+	
+    @EntityGraph(attributePaths = {"user"}) // Fetch Join 설정
+    List<Influencer> findAll();
     
     
 }

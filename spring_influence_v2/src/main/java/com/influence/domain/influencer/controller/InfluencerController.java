@@ -61,7 +61,6 @@ public class InfluencerController {
 	@GetMapping("/list")
 	public ResponseEntity<List<InfluencerDTO>> listInfluencer() {
 		
-
 		List<InfluencerDTO> listInfluencer = influencerService.listInfluencer();
 		
 		return ResponseEntity.ok(listInfluencer);

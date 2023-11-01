@@ -2,6 +2,7 @@ package com.influence.domain.post.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,6 +25,9 @@ public interface PostInfluencerRepository extends JpaRepository<PostInfluencer, 
 
 
 	PostInfluencer findByInfluencerAndPost(Influencer influencer, Post post);
+	
+	@Query("SELECT pi FROM PostInfluencer pi JOIN FETCH pi.post JOIN FETCH pi.influencer")
+	List<PostInfluencer> findAllWithPostAndInfluencer();
 	
 
 }

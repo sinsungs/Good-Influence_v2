@@ -33,13 +33,13 @@ public class PostMapper {
 		return PostResponseDTO.builder()
 			
 		   .pno(postInfluencer.getPost().getPno())
-		   .ino(postInfluencer.getInfluencer().getIno())
 		   .title(postInfluencer.getPost().getTitle())
            .content(postInfluencer.getPost().getContent())
-           .name(postInfluencer.getInfluencer().getName())
            .imageurl(postInfluencer.getPost().getImageUrl())
-//           .influencerContent(postInfluencer.getInfluencer().getContent())
-            
+		   .ino(postInfluencer.getInfluencer().getIno())
+           .name(postInfluencer.getInfluencer().getName())
+           .influencerimage(postInfluencer.getInfluencer().getImageUrl())//           .influencerContent(postInfluencer.getInfluencer().getContent())
+           .writer(postInfluencer.getPost().getUser().getUsername())
 		   .build();
 		
 	}

@@ -24,4 +24,5 @@ public class PostResponseDTO {
     private String writer;
     
     private String imageurl;
+    private String influencerimage;
 }
