@@ -23,6 +23,8 @@ import com.influence.domain.post.mapper.PostReviewMapper;
 import com.influence.domain.post.repository.PostReviewRepository;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +45,8 @@ public class PostReviewService{
 		
 		dto.setWriter(authentication.getName());
 	
-		User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
+		User user = userRepository.findByEmail(dto.getWriter())
+   			 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND, "로그인 정보를 찾지 못했습니다."));
 		
 		PostReview postReview = postReviewMaper.dtoToEntity(dto, uploadedFileName, user);
 	    

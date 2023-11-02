@@ -22,8 +22,8 @@ import com.influence.domain.user.dto.UserDTO;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.mapper.UserMapper;
 import com.influence.domain.user.repository.UserRepository;
-import com.influence.global.AppException;
-import com.influence.global.ErrorCode;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 import com.influence.global.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -76,11 +76,11 @@ public class UserService {
 		
 		// email 없음
 		User selectedUser = userRepository.findByEmail(user.getEmail())
-				.orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
+				.orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
 				
 		// password 틀림 
 		if (!encoder.matches( user.getPassword(), selectedUser.getPassword())) {
-			throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드를 잘못 입력 했습니다.");
+			throw new CustomException(ErrorCode.INVALID_PASSWORD, "패스워드를 잘못 입력 했습니다.");
 		} 
 		
 		return "성공";
@@ -119,13 +119,28 @@ public class UserService {
 		if(userID != null) {
 			return "이미 사용중인 아이디입니다.";
 		}
+		
+		// email 중복 check Exception 
+//		userRepository.findByEmail(dto.getEmail())
+//		.ifPresent(user -> {
+//			throw new AppException(ErrorCode.EMAIL_DUPLICATED, "사용중인 이메일 입니다.");
+//	});
+		
 					
 		// username 중복 check
-				User userName = userRepository.findByUsername(dto.getUsername()).orElse(null);
+		User userName = userRepository.findByUsername(dto.getUsername()).orElse(null);
+		
+		if(userName != null) {
+			return "닉네임 '" + userName.getUsername() + "' 사용중입니다.";
+		}
 				
-				if(userName != null) {
-					return "닉네임 '" + userName.getUsername() + "' 사용중입니다.";
-				}
+		// username 중복 check Exception
+//		userRepository.findByUsername(dto.getUsername())
+//			.ifPresent(user -> {
+////				throw new RuntimeException("사용중인 닉네임 입니다.");
+//				throw new AppException(ErrorCode.USERNAME_DUPLICATED, "사용중인 닉네임 입니다.");
+//		});
+				
 		
 		// Mapper
 		User user = userMapper.ToEntity(dto);

@@ -17,6 +17,8 @@ import com.influence.domain.payment.repository.PaymentRepository;
 import com.influence.domain.post.repository.PostRepository;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -38,7 +40,8 @@ public class PaymentService {
 	// 카카오 페이 결제 성공 시 보유금 충전 
     public Payment savePayment(PaymentDTO dto) {
     	
-        User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
+        User user = userRepository.findByEmail(dto.getEmail())
+   			 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND, "로그인 정보를 찾지 못했습니다."));
         
         user.setAmount(user.getAmount() + dto.getDeposit() );
         

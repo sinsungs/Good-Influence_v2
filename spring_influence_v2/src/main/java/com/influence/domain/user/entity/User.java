@@ -1,5 +1,9 @@
 package com.influence.domain.user.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.influence.domain.user.RoleType;
 import com.influence.global.utils.BaseEntity;
@@ -15,6 +20,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.influence.domain.meet.entity.Meet;
+import com.influence.domain.meetuser.entity.MeetUser;
+import com.influence.domain.orders.entity.Orders;
+import com.influence.domain.payment.entity.Payment;
+import com.influence.domain.influencer.entity.Influencer;
+import com.influence.domain.post.entity.Post;
+import com.influence.domain.post.entity.PostReview;
+import com.influence.domain.comment.entity.Comment;
+
 
 @Data
 @NoArgsConstructor
@@ -53,26 +68,6 @@ public class User extends BaseEntity {
 	
 	private String imageUrl;
 	
-	
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Meet> meets = new ArrayList<>();
-//    
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<MeetUser> meetusers = new ArrayList<>();
-//    
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Post> posts = new ArrayList<>();
-//	
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Payment> payments = new ArrayList<>();
-//    
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Orders> orders = new ArrayList<>();
-	
-    // Reward를 참조(조인)하는 부분 추가
-//    @ManyToOne
-//    @JoinColumn(name = "rankid")
-//    private Ranks ranks;
 
 
 }

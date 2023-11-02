@@ -15,6 +15,8 @@ import com.influence.domain.meet.repository.MeetRepository;
 import com.influence.domain.meetuser.entity.MeetUser;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,8 +36,9 @@ public class MeetService {
     public Boolean createMeet(MeetDTO dto, Authentication authentication) {
     	
     	dto.setWriter(authentication.getName());
-    	
-    	User user = userRepository.findByEmail(dto.getWriter()).orElse(null);
+		
+    	User user = userRepository.findByEmail(dto.getWriter())
+    			 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND, "로그인 정보를 찾지 못했습니다."));
     	
     	Meet meet = meetMapper.dtoToEntity(dto, user);
     	

@@ -12,6 +12,8 @@ import com.influence.domain.influencer.entity.Influencer;
 import com.influence.domain.influencer.repository.InfluencerRepository;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,7 +34,9 @@ public class InfluencerService{
 	@Transactional
 	public String verifyInfluencer(Long ino, String email) {
 		
-        User user = userRepository.findByEmail(email).orElse(null);
+        User user = userRepository.findByEmail(email)
+   			 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND, "로그인 정보를 찾지 못했습니다."));
+        
         Influencer findInfluencer = influencerRepository.findById(ino).orElse(null);
         
         System.out.println(user.getSns());
