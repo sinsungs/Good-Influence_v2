@@ -111,7 +111,7 @@ return (
                                 {/* <div class="full"> */}
                                 <span>{user.sns}</span><br/>
                                 <button onClick={() => handleEditUser(user.id)}>인플루언서 등록</button>
-                                <button onClick={() => handleDeleteUser(user.id)} style={{backgroundColor:'red'}}  >탈퇴</button>
+                                {/* <button onClick={() => handleDeleteUser(user.id)} style={{backgroundColor:'red'}}  >탈퇴</button> */}
                                 </div>
                             {/* </div> */}
 

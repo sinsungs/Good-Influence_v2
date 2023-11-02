@@ -201,7 +201,7 @@ function Influencer() {
           <button className="login-button" onClick={handleRectangleClick}>
               인플루언서 등록하기
           </button>
-          <input className="search-input" placeholder="인플루언서 검색" maxlength="30" type="text" value=""></input>
+          {/* <input className="search-input" placeholder="인플루언서 검색" maxlength="30" type="text" value=""></input> */}
 
         </div>
 

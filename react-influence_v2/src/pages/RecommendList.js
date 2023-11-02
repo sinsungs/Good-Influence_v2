@@ -21,6 +21,7 @@ function RecommendList() {
       .then(response => {
         // 요청에 성공하면 받아온 데이터를 상태로 설정합니다.
         setInfluencer(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         // 오류 처리 로직을 작성하세요.
@@ -91,21 +92,27 @@ function RecommendList() {
             </div>
             <div className="box-body">
 
-              인플루언서 내용 : {Influencer.title}<br/>
-              추천 글 내용 : {Influencer.content}<br/>
-              추천 인플루언서 : {Influencer.name}
+              제목 : {Influencer.title}<br/>
+              내용 : {Influencer.content}<br/>
+
+              <div className="y-box-header">
+                <img src={Influencer.influencerimage} alt="image" style={{ width: '30%', height: '50%' }}/>
+                추천 인플루언서 : {Influencer.name}
+                <button onClick={() => deletePost(Influencer.ino, Influencer.pno)} style={{backgroundColor:"red"}}>추천글 삭제</button>
+              </div>
+              
               <div>
-              <button onClick={() => deletePost(Influencer.ino, Influencer.pno)} style={{backgroundColor:"red"}}>추천글 삭제</button>
+              
               </div>
 
               
             </div>
             <div className="box-footer">
               <a>
-                <span className='box-name'>by </span>
+                <span className='box-name'>작성자 : {Influencer.writer} </span>
               </a>
               <span className='box-like'>
-                  ♥ 33
+                  Like : 0
               </span>
             </div>
            
