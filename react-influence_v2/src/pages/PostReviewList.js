@@ -13,7 +13,7 @@ function PostReviewList() {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    axios.get(`/postreview/list?page=${currentPage}`)
+    axios.get(`/api/postreview/list?page=${currentPage}`)
       .then(response => {
         setPosts(response.data.content);
         setTotalPages(response.data.totalPages);
@@ -29,7 +29,7 @@ function PostReviewList() {
       return;
     }
     alert('추천게시글 삭제 하시겠습니까 ?');
-    axios.delete(`/postreview/delete/${prno}`)
+    axios.delete(`/api/postreview/delete/${prno}`)
       .then(response => {
         console.log(response.data);
         alert(response.data);

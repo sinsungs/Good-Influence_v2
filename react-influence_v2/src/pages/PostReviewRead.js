@@ -18,7 +18,7 @@ function PostReviewRead() {
   const [content, setContent] = useState(''); // 댓글 작성 상태 추가
 
   useEffect(() => {
-    axios.get(`/postreview/read/${prno}`,)
+    axios.get(`/api/postreview/read/${prno}`,)
       .then(response => {
         setPosts(response.data);
         console.log(Posts);
@@ -32,7 +32,7 @@ function PostReviewRead() {
   }, []);
 
   const commentLoading = () => {
-    axios.get(`/comment/list/${prno}`)
+    axios.get(`/api/comment/list/${prno}`)
     .then(response => {
         setComments(response.data);
     })
@@ -48,7 +48,7 @@ function PostReviewRead() {
       return;
     }
     alert('추천게시글 삭제 하시겠습니까 ?');
-    axios.delete(`/comment/delete/${prno}`)
+    axios.delete(`/api/comment/delete/${prno}`)
       .then(response => {
         console.log(response.data);
         alert(response.data);
@@ -79,7 +79,7 @@ const handleCommentSubmit = () => {
 
       };
     // 서버로 새 댓글 전송
-    axios.post(`/comment/register/${prno}`, contentData, {
+    axios.post(`/api/comment/register/${prno}`, contentData, {
     headers: {
         Authorization: `Bearer ${jwtToken}`, // JWT 토큰을 헤더에 추가
         },

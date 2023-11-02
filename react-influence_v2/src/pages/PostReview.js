@@ -54,7 +54,7 @@ function RecommendPost() {
     formData.append('dto', new Blob([JSON.stringify(postData)], { type: "application/json" }));
     formData.append('file', file);
 
-    axios.post('/postreview/register', formData, {
+    axios.post('/api/postreview/register', formData, {
       headers: {
         Authorization: `Bearer ${jwtToken}`, // JWT 토큰을 헤더에 추가
       },

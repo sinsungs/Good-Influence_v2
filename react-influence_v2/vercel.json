@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/:path*",
+        "destination": "https://goodinfluence.store/:path*"
+        },
+        {
+            "source": "/api/:path*/",
+        "destination": "https://goodinfluence.store/:path*/"
+        }
+    ]
+}
