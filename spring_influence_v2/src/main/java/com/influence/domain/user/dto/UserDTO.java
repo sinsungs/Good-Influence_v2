@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -29,12 +30,15 @@ import lombok.ToString;
 public class UserDTO {
 	
 	private Long id;
-		
-	private String username;
 	
-	private String password;
-	
+	@NotBlank(message = "이메일을 입력해 주세요")
 	private String email;
+	
+	@NotBlank(message = "비밀번호를 입력해 주세요")
+	private String password;
+		
+	@NotBlank(message = "닉네임을 입력해 주세요")
+	private String username;
 	
 	private LocalDateTime regdate;
 	

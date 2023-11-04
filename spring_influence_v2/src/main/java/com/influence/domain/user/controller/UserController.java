@@ -1,6 +1,7 @@
 package com.influence.domain.user.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +40,16 @@ public class UserController {
 	
 	// 회원 가입
 	@PostMapping("/user/join")
-	public ResponseEntity<String> joinUser(@RequestBody UserDTO dto) {
+	public ResponseEntity<String> joinUser(@Valid @RequestBody UserDTO dto, BindingResult br) {
+		if(br.hasErrors()) {
+			
+			// DTO에서 유효성 검사를 통과하지 못한 에러들 매핑 
+	        for (FieldError error : br.getFieldErrors()) {
+	        	
+	        		// 에러의 message를 반환 
+	                return ResponseEntity.ok().body(error.getDefaultMessage());
+	        }
+		}
 		
 		String result = userService.Join(dto);
 		
@@ -104,7 +116,6 @@ public class UserController {
         }
         
         // 유저가 기존 회원이면 로그인 처리 
-
         String jwt = userService.jwtLogin(originUser.getEmail(), "examplePassword");
         
 		return jwt ;
