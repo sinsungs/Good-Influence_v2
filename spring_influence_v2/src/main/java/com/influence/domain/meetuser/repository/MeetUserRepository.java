@@ -29,6 +29,9 @@ public interface MeetUserRepository extends JpaRepository<MeetUser, Long> {
     
 //boolean existsByUserAndMeet(User user, Meet meet);
 	MeetUser findByUserAndMeet(User user, Meet meet);
+
+
+	List<MeetUser> findByUser(User user);
     
 
 

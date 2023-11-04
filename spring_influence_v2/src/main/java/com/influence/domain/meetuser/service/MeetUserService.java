@@ -1,13 +1,18 @@
 package com.influence.domain.meetuser.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.influence.domain.meet.dto.MeetDTO;
 import com.influence.domain.meet.entity.Meet;
 import com.influence.domain.meet.repository.MeetRepository;
 import com.influence.domain.meetuser.dto.MeetUserDTO;
 import com.influence.domain.meetuser.entity.MeetUser;
+import com.influence.domain.meetuser.mapper.MeetUserMapper;
 import com.influence.domain.meetuser.repository.MeetUserRepository;
 import com.influence.domain.orders.entity.Orders;
 import com.influence.domain.orders.repository.OrdersRepository;
@@ -26,6 +31,7 @@ public class MeetUserService {
 	private final MeetRepository meetRepository;
 	private final MeetUserRepository meetUserRepository;
 	private final OrdersRepository ordersRepository;
+	private final MeetUserMapper meetUserMapper;
 
 	
 	// 소셜 모임 참가 
@@ -141,6 +147,23 @@ public class MeetUserService {
 	
 	        return "모임을 취소했습니다.";
 	    }
+
+
+		public List<MeetDTO> listMeeting(Authentication authentication) {
+			
+	        User user = userRepository.findByEmail(authentication.getName()).orElse(null);
+	        
+	        List<MeetUser> meetUsers = meetUserRepository.findByUser(user);
+	        
+	        List<MeetDTO> dtoList = new ArrayList<>();
+	        
+		     for (MeetUser meetUser : meetUsers) {
+			      dtoList.add(meetUserMapper.entityToDTO(meetUser));
+			 }
+	        
+			return dtoList;
+		}
+	
     
     
 }
