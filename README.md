@@ -45,7 +45,6 @@ MySQL
   - 소셜 모임 참가
   - 소셜 모임 후기 게시글
   
-  
 - 인플루언서
   - 인플루언서 인증
   - 인플루언서 검색 
@@ -71,9 +70,3 @@ MySQL
 
 <img src="./assets/Untitled 2.png" width=80%>
 
-### 지도
-
-- Kakao map api 사용, 현 위치 기반 크로스핏 센터 검색 기능
-- 전국에서 센터 검색 기능
-
-<img src="./assets/Untitled 3.png" width=80%>
