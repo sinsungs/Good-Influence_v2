@@ -62,7 +62,7 @@ MySQL
 
 ### 메인
 
-<img src="./assets/Untitled.png" width=80%>
+<img src="./img/로그인.JPG" width=80%>
 
 ### 로그인, 회원가입
 
