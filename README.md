@@ -60,11 +60,79 @@ MySQL
 
 ## 🖥️ 실행 화면
 
-### 메인
-
-<img src="./img/로그인.JPG" width=80%>
-
 ### 로그인, 회원가입
+
+<img src="./img/소셜모임.JPG" width=80%>
+
+### 소셜 모임 참가 
+
+<img src="./img/소셜모임 만들기.JPG" width=80%>
+
+### 소셜 모임 만들기 
+
+<img src="./img/소셜모임.JPG" width=80%>
+
+### 소셜 모임 후기 게시글
+
+<img src="./img/후기게시글" width=80%>
+
+### 후기 게시글 상세보기 및 댓글 
+
+<img src="./img/게시글댓글.JPG" width=80%>
+
+### 인플루언서 등록 및 인증하기 
+
+<img src="./img/인플루언서.JPG" width=80%>
+
+### 인플루언서 추천 게시글 작성
+
+<img src="./img/추천게시글.JPG" width=80%>
+
+### 인플루언서 찾아보기 검색 기능 
+
+<img src="./img/인플루언서검색.JPG" width=80%>
+
+### 인플루언서 추천 게시글 조회
+
+<img src="./img/인플루언서추천게시글.JPG" width=80%>
+
+### 활동 랭킹 보드 (통계) 
+
+<img src="./img/랭킹보드.JPG" width=80%>
+
+### 관리자 기능 ( 인플루언서 권한 부여 , 유저 관리 )  
+
+<img src="./img/관리자.png" width=80%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <img src="./assets/Untitled 1.png" width=80%>
 
