@@ -94,7 +94,7 @@ function Header() {
         <img
           src='https://sinsung-s3.s3.ap-northeast-2.amazonaws.com/%EA%B5%BF%EC%9D%B8%ED%94%8C%EB%A3%A8%EC%96%B8%EC%8A%A4.jpg'
           alt='이미지'
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover'}}
         />
         </Link>
         </div>
@@ -170,8 +170,13 @@ function Header() {
               <p>인플루언서<br/>소셜 모임</p>
             </Link>
 
-            <Link to="/reviewlist">
+            <Link to="/mypage">
               <img src="https://plab-football.s3.amazonaws.com/static/img/explore_dribbler.svg" />
+              <p>소셜 모임<br/>현황 보기</p>
+            </Link>
+
+            <Link to="/reviewlist">
+            <img src="https://plab-football.s3.amazonaws.com/static/img/explore_seeding.svg" />
               <p>소셜 모임<br/> 후기 글</p>
             </Link>
 

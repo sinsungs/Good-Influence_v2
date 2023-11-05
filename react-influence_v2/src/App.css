@@ -391,7 +391,8 @@ button[type='submit']:hover {
 
 .full {
   width: 200px;
-  background-color:#61dafb;
+  /* background-color:white;
+  border-radius: 10px;  */
 }
 
 

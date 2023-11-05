@@ -238,6 +238,7 @@ return (
                         {/* <a>  */}
                             <div class="flex-item-left">
                                 <p>{meets.meettime.replace('T', '  ')}</p>
+                                {/* <p>{meets.meettime}</p> */}
                             </div>
                             <div class="flex-item-center-one">
                                 <h3>{meets.region}</h3>
@@ -257,7 +258,7 @@ return (
                                     현재 : {meets.currentPlayers}명 / {meets.maxplayers}명
                                     <p>{meets.result}</p>
                                     <button onClick={() => registerMeeting(meets.meetid)}>신청하기</button>
-                                    <button onClick={() => deleteMeeting(meets.meetid)} style={{backgroundColor:"red"}}>취소하기</button>
+                                    {/* <button onClick={() => deleteMeeting(meets.meetid)} style={{backgroundColor:"red"}}>취소하기</button> */}
 
                                 </div>
                             </div>
