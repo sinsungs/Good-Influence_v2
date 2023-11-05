@@ -68,6 +68,10 @@ MySQL
 
 <img src="./img/소셜모임.JPG" width=80%><br>
 
+### 참가 중인 소셜 모임 및 결제 내역
+
+<img src="./img/현황및결제내역.JPG" width=80%><br>
+
 ### 소셜 모임 만들기
 
 <img src="./img/소셜모임 만들기.JPG" width=80%><br>
