@@ -74,7 +74,7 @@ MySQL
 
 ### 소셜 모임 후기 게시글 
 
-<img src="./img/후기게시글" width=80%><br>
+<img src="./img/후기게시글.JPG" width=80%><br>
 
 ### 후기 게시글 상세보기 및 댓글 
 
