@@ -237,8 +237,8 @@ return (
                     <li class="flex-container" key={meets.meetid}>
                         {/* <a>  */}
                             <div class="flex-item-left">
-                                <p>{meets.meettime.replace('T', '  ')}</p>
-                                {/* <p>{meets.meettime}</p> */}
+                                {/* <p>{meets.meettime.replace('T', '')}</p> */}
+                                <p>{meets.meettime}</p>
                             </div>
                             <div class="flex-item-center-one">
                                 <h3>{meets.region}</h3>
