@@ -171,9 +171,8 @@ public class UserService {
 	@Transactional
 	public User findUser(String email) {
 		
-		User user = userRepository.findByEmail(email).orElseGet(()->{
-			return new User();
-		});
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
 		
 		return user;
 	}

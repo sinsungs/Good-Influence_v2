@@ -41,11 +41,10 @@ public class UserController {
 	// 회원 가입
 	@PostMapping("/user/join")
 	public ResponseEntity<String> joinUser(@Valid @RequestBody UserDTO dto, BindingResult br) {
+		
 		if(br.hasErrors()) {
-			
 			// DTO에서 유효성 검사를 통과하지 못한 에러들 매핑 
 	        for (FieldError error : br.getFieldErrors()) {
-	        	
 	        		// 에러의 message를 반환 
 	                return ResponseEntity.ok().body(error.getDefaultMessage());
 	        }
@@ -59,7 +58,13 @@ public class UserController {
 	
 	// JWT 로그인 
 	@PostMapping("/user/jwtlogin")
-	public ResponseEntity<String> jwtLogin(@RequestBody LoginRequest dto) {
+	public ResponseEntity<String> jwtLogin(@Valid @RequestBody LoginRequest dto, BindingResult br) {
+		
+		if(br.hasErrors()) { 
+	        for (FieldError error : br.getFieldErrors()) {
+	                return ResponseEntity.ok().body(error.getDefaultMessage());
+	        }
+		}
 
 		return ResponseEntity.ok().body(userService.jwtLogin(dto.getEmail(), dto.getPassword()));
 	}
@@ -67,7 +72,7 @@ public class UserController {
 	
 	// 일반 로그인 
 	@PostMapping("/user/login")
-	public ResponseEntity<String> Login(@RequestBody User user, HttpSession session) {
+	public ResponseEntity<String> Login(@RequestBody User user) {
 		
 		String result = userService.Login(user);
 		

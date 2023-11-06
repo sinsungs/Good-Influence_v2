@@ -18,6 +18,8 @@ import com.influence.domain.orders.entity.Orders;
 import com.influence.domain.orders.repository.OrdersRepository;
 import com.influence.domain.user.entity.User;
 import com.influence.domain.user.repository.UserRepository;
+import com.influence.global.exception.CustomException;
+import com.influence.global.exception.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +45,9 @@ public class MeetUserService {
     	dto.setPrice(dto.getPrice());
     	
         User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
+//		.orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
         Meet meet = meetRepository.findById(dto.getMeetid()).orElse(null);
+//		.orElseThrow(() -> new CustomException(ErrorCode.MEET_NOTFOUND, "존재하지 않는 모임 입니다."));
         
         if (user == null || meet == null) {
             return "사용자 또는 모임을 찾을 수 없습니다.";
@@ -114,7 +118,9 @@ public class MeetUserService {
 	    	dto.setPrice(10000);
 	    	
 	        User user = userRepository.findByEmail(dto.getEmail()).orElse(null);
+//			.orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
 	        Meet meet = meetRepository.findById(dto.getMeetid()).orElse(null);
+//			.orElseThrow(() -> new CustomException(ErrorCode.MEET_NOTFOUND, "존재하지 않는 모임 입니다."));
 	        
 	        if (user == null || meet == null) {
 	            return "사용자 또는 모임을 찾을 수 없습니다.";
@@ -125,6 +131,7 @@ public class MeetUserService {
 //	        }
 	        
 	        MeetUser meetUser = meetUserRepository.findByUserAndMeet(user, meet);
+//			.orElseThrow(() -> new CustomException(ErrorCode.MEETUSER_NOTFOUND, "해당 사용자는 이 모임에 참가하지 않았습니다."));
 
 	        if (meetUser == null) {
 	            return "해당 사용자는 이 모임에 참가하지 않았습니다.";
@@ -152,6 +159,7 @@ public class MeetUserService {
 		public List<MeetDTO> listMeeting(Authentication authentication) {
 			
 	        User user = userRepository.findByEmail(authentication.getName()).orElse(null);
+//			.orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOTFOUND, "존재하지 않는 아이디 입니다."));
 	        
 	        List<MeetUser> meetUsers = meetUserRepository.findByUser(user);
 	        

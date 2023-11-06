@@ -67,18 +67,15 @@ public class MeetService {
 	@Transactional
     public Boolean updateMeet(Long meetId, MeetDTO dto) {
 		
-        Meet meet = meetRepository.findById(meetId).orElse(null);
+        Meet meet = meetRepository.findById(meetId)
+        		.orElseThrow(() -> new CustomException(ErrorCode.MEET_NOTFOUND, "존재하지 않는 모임 입니다."));
 
-        if (meet != null) {
         	
             meet = meetMapper.putToEntity(dto);
 
             meetRepository.save(meet);
             
             return true;
-        }
-
-        return null; 
     }
 	
 

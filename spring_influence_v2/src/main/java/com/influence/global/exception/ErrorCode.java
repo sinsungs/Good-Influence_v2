@@ -17,9 +17,15 @@ public enum ErrorCode {
 	
 
     USERNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다"),
+	MEET_NOTFOUND(HttpStatus.NOT_FOUND, "존재하지 않는 모임 입니다."),
+    MEETUSER_NOTFOUND(HttpStatus.NOT_FOUND, "해당 사용자는 이 모임에 참가하지 않았습니다."),
+	INFLUENCER_NOTFOUND(HttpStatus.NOT_FOUND, "존재하지 않는 인플루언서 입니다."),
+    
+	
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "권한이 없습니다"),
     DUPLICATED_USER_NAME(HttpStatus.CONFLICT, "유저명이 중복됩니다"),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러가 발생하였습니다"),   
+
     
     /* 400 BAD_REQUEST : 잘못된 요청 */
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */

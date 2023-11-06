@@ -45,11 +45,7 @@ public class PostInfluencerController {
 	  	
     	Boolean result = postInfluencerService.createInfluencerPost(dto, pno);
 
-	    if (result) {
-	        return ResponseEntity.ok(true);
-	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-	    }
+	    return ResponseEntity.ok(result);
     }
 
     
@@ -60,7 +56,6 @@ public class PostInfluencerController {
         List<PostResponseDTO> response = postInfluencerService.getList();
         
         return ResponseEntity.ok(response);
-        
     }
     
     
@@ -70,13 +65,8 @@ public class PostInfluencerController {
     public  ResponseEntity<Boolean> deletePost(@PathVariable Long ino, @PathVariable Long pno) {
     	
         boolean result = postInfluencerService.deleteInfluencerPost(ino, pno);
-        
-	    if (result) {
-	        return ResponseEntity.ok(true);
-	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-	    }
-        
+      
+	        return ResponseEntity.ok(result);
     }
     
     
