@@ -19,10 +19,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    # - name: Change directory to spring_influence_v2
-    #   run: cd Good-Influence_v2/spring_influence_v2
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      working-directory: ./spring_influence_v2
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
