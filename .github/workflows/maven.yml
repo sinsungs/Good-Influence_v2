@@ -19,8 +19,8 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Change directory to spring_influence_v2
-      run: cd Good-Influence_v2/spring_influence_v2
+    # - name: Change directory to spring_influence_v2
+    #   run: cd Good-Influence_v2/spring_influence_v2
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
