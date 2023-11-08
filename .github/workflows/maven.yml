@@ -22,7 +22,7 @@ jobs:
     - name: Change directory to spring_influence_v2
       run: cd spring_influence_v2
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file spring_influence_v2/pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
