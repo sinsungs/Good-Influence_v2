@@ -71,17 +71,6 @@ public class CommentController {
 	    }
 }
     
-//    @DeleteMapping("/delete/{cno}")
-//    public ResponseEntity<Boolean> deletePost(@PathVariable Long cno) {
-//    	
-//        boolean result = commentService.deleteComment(cno);
-//        
-//	    if (result) {
-//	        return ResponseEntity.ok(true);
-//	    } else {
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-//	    }
-//}
     
 }
     
