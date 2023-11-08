@@ -22,6 +22,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build with Maven
-      run: mvn -B package --file Good-Influence_v2/spring_influence_v2/pom.xml
-      working-directory: Good-Influence_v2/spring_influence_v2
+      run: mvn -B package --file ./spring_influence_v2/pom.xml
+      
 
